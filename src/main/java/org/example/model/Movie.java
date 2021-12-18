@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor
-@ToString
+
 @Table(name = "MOVIE_TABLE")
 public class Movie {
     @Id
