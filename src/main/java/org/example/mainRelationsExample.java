@@ -1,12 +1,9 @@
 package org.example;
 
-import org.example.dao.AuthorDao;
-import org.example.dao.EntityDao;
-import org.example.dao.MovieDao;
-import org.example.dao.ReviewerDao;
-import org.example.model.Author;
-import org.example.model.Movie;
-import org.example.model.Reviewer;
+import org.example.dao.*;
+import org.example.model.*;
+
+import java.util.List;
 
 public class mainRelationsExample {
     public static void main(String[] args) {
@@ -14,12 +11,38 @@ public class mainRelationsExample {
         ReviewerDao reviewerDao = new ReviewerDao(hibernateFactory, Reviewer.class);
         EntityDao<Movie> movieDao = new EntityDao<>(hibernateFactory, Movie.class);
         EntityDao<Author> authorDao = new EntityDao<>(hibernateFactory, Author.class);
+        EntityDao<Actor> actorDaoFromEntity = new EntityDao<>(hibernateFactory, Actor.class);
+        ActorDao actorDao = new ActorDao(hibernateFactory);
 
-        savingOneToOne(reviewerDao, movieDao);
-        savingOneToMany(authorDao, movieDao);
+ //       savingOneToOne(reviewerDao, movieDao);
+ //       savingOneToMany(authorDao, movieDao);
+        savingManyToMany(actorDao, movieDao);
 
 
         hibernateFactory.getSessionFactory().close();
+    }
+
+    private static void savingManyToMany(ActorDao actorDao, EntityDao<Movie> movieDao) {
+        Actor actor01 = new Actor();
+        actor01.setName("Michał");
+        actor01.setSurname("Michalski");
+        actor01.setRating(Rating.HIGH);
+        Actor actor02 = new Actor();
+        actor02.setName("Bartosz");
+        actor02.setSurname("Bartczak");
+        actor02.setRating(Rating.MEDIUM);
+        Movie movie01 = new Movie();
+        movie01.setTitle("dupa węża 01");
+        movie01.setType("horror");
+        Movie movie02 = new Movie();
+        movie02.setTitle("dupa węża 02");
+        movie02.setType("horror");
+
+        movie02.setActors(List.of(actor01,actor02));
+        actorDao.save(actor01);
+        actorDao.save(actor02);
+        movieDao.save(movie01);
+        movieDao.save(movie02);
     }
 
     private static void savingOneToOne(ReviewerDao reviewerDao, EntityDao<Movie> movieDao) {

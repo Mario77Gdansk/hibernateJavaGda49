@@ -31,4 +31,7 @@ public class Movie {
     @ManyToOne
     private Author author;
 
+    @ManyToMany
+    private List<Actor> actors;
+
 }

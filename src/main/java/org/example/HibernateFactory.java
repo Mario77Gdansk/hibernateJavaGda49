@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.model.Actor;
 import org.example.model.Author;
 import org.example.model.Movie;
 import org.example.model.Reviewer;
@@ -21,6 +22,7 @@ public class HibernateFactory {
 		configuration.addAnnotatedClass(Movie.class);
 		configuration.addAnnotatedClass(Author.class);
 		configuration.addAnnotatedClass(Reviewer.class);
+		configuration.addAnnotatedClass(Actor.class);
 
 
 		return configuration;
